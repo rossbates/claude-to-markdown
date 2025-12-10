@@ -178,6 +178,10 @@ function buildMarkdown(parsed) {
         )})`
         );
         message.content.forEach((content) => {
+        // Skip thinking blocks
+        if (content.type === "thinking" || content.type === "redacted_thinking") {
+            return;
+        }
         if (content.type == "tool_use") {
             if (content.name == "repl") {
             bits.push(
