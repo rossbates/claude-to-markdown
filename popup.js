@@ -217,11 +217,14 @@ function buildMarkdown(parsed) {
             }
         } else {
             if (content.text) {
-            bits.push(
-                replaceArtifactTags(
+            let text = replaceArtifactTags(
                 content.text.replace(/<\/antArtifact>/g, "\n```")
-                )
             );
+            // Style human messages as blockquotes
+            if (message.sender === "human") {
+                text = text.split("\n").map(line => "> " + line).join("\n");
+            }
+            bits.push(text);
             } else {
             bits.push(JSON.stringify(content));
             }
